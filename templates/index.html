@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized News Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <h1>Welcome to Your Personalized News Dashboard</h1>
+
+    <!-- User Preferences Form -->
+    <form id="preferences-form" method="POST">
+        <label>Select your interests:</label><br>
+        <input type="checkbox" name="interests" value="technology" {% if 'technology' in session.get('interests', []) %} checked {% endif %}> Technology<br>
+        <input type="checkbox" name="interests" value="sports" {% if 'sports' in session.get('interests', []) %} checked {% endif %}> Sports<br>
+        <input type="checkbox" name="interests" value="health" {% if 'health' in session.get('interests', []) %} checked {% endif %}> Health<br>
+        <input type="checkbox" name="interests" value="business" {% if 'business' in session.get('interests', []) %} checked {% endif %}> Business<br>
+        <input type="checkbox" name="interests" value="science" {% if 'science' in session.get('interests', []) %} checked {% endif %}> Science<br>
+        <input type="checkbox" name="interests" value="politics" {% if 'politics' in session.get('interests', []) %} checked {% endif %}> Politics<br>
+        <br>
+
+        <!-- Country Selection Dropdown -->
+        <label for="country">Select your country:</label>
+        <select name="country" id="country">
+            <option value="all" {% if session.get('country') == 'all' %} selected {% endif %}>All Countries</option>
+            {% for code, country, flag in countries %}
+                <option value="{{ code }}" {% if session.get('country') == code %} selected {% endif %}>
+                    {{ flag }} {{ country }}
+                </option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Save Preferences</button>
+    </form>
+
+    <h2>Latest News</h2>
+    {% if news %}
+        <ul>
+            {% for article in news %}
+                <li>
+                    <a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
+                    <p>{{ article.description }}</p>
+                    <p><em>Source: {{ article.source.name }}</em></p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No news available for the selected country or interests. Please check your preferences.</p>
+    {% endif %}
+
+</body>
+</html>
