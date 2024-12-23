@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = 'chickenwing2024'
@@ -21,7 +21,6 @@ countries = [
     ('in', 'India', '🇮🇳'),
     ('ru', 'Russia', '🇷🇺'),
     ('ar', 'Argentina', '🇦🇷'),
-    ('in', 'India', '🇮🇳'),
     ('ac', 'All countries', '🌍'),
 ]
 
@@ -40,7 +39,7 @@ COUNTRY_SOURCES = {
     'in': ['the-times-of-india', 'the-hindu'],
     'ru': ['ria', 'lenta', 'rbk'],
     'ar': ['la-nacion', 'infobae', 'clarin'],
-    'ac':['abc-news', 'bbc-news', 'cnn', 'fox-news', 'the-washington-post','abc-news-au', 'news-com-au', 'aftenposten', 'nrk', 'ansa-it', 'football-italia', 'il-sole-24-ore', 'argaam', 'google-news-sa',  'bild', 'die-zeit', 'der-tagesspiegel', 'spiegel-online', 'handelsblatt', 'globo', 'blasting-news-br', 'infobae', 'google-news-ca', 'financial-post', 'cbc-news', 'bbc-news', 'the-guardian', 'the-times', 'le-monde', 'les-echos', 'liberation','the-times-of-india', 'the-hindu','ria', 'lenta', 'rbk', 'la-nacion', 'infobae', 'clarin'],
+    'ac': ['abc-news', 'bbc-news', 'cnn', 'fox-news', 'the-washington-post', 'abc-news-au', 'news-com-au', 'aftenposten', 'nrk', 'ansa-it', 'football-italia', 'il-sole-24-ore', 'argaam', 'google-news-sa', 'bild', 'die-zeit', 'der-tagesspiegel', 'spiegel-online', 'handelsblatt', 'globo', 'blasting-news-br', 'infobae', 'google-news-ca', 'financial-post', 'cbc-news', 'bbc-news', 'the-guardian', 'the-times', 'le-monde', 'les-echos', 'liberation', 'the-times-of-india', 'the-hindu', 'ria', 'lenta', 'rbk', 'la-nacion', 'infobae', 'clarin'],
 }
 
 NEWS_API_URL = 'https://newsapi.org/v2/top-headlines'
@@ -51,7 +50,7 @@ def fetch_news(api_key, country, interests):
     url = f"{NEWS_API_URL}?apiKey={api_key}"
 
     # Start by trying to fetch top headlines
-    if country != 'all':
+    if country != 'ac':
         url += f"&country={country}"
 
     if interests:
@@ -106,16 +105,21 @@ def fetch_news(api_key, country, interests):
         print(f"Error fetching news: {e}")
         return []
 
-
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    api_key = None
+    api_key = session.get('api_key', '')
+    dark_mode = session.get('dark_mode', False)
+
     if request.method == 'POST':
         # Get the API key, country, and interests from the form
         api_key = request.form.get('api_key')
         country = request.form.get('country')
         interests = request.form.getlist('interests')
+        dark_mode = 'dark_mode' in request.form
+        
+        # Save API key and dark mode preference to session
+        session['api_key'] = api_key
+        session['dark_mode'] = dark_mode
         
         if not api_key:
             return render_template('index.html', error="API Key is required!", countries=countries)
@@ -124,12 +128,9 @@ def index():
         articles = fetch_news(api_key, country, interests)
         
         # Render the result to the template
-        return render_template('index.html', articles=articles, countries=countries, selected_country=country, api_key=api_key)
-    
-    return render_template('index.html', countries=countries, api_key=api_key)
+        return render_template('index.html', articles=articles, countries=countries, selected_country=country, api_key=api_key, dark_mode=dark_mode)
 
+    return render_template('index.html', countries=countries, api_key=api_key, dark_mode=dark_mode)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
