@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalized News Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    
+        <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/x-icon">
 </head>
 <body>
 
@@ -13,42 +15,67 @@
     <!-- User Preferences Form -->
     <form id="preferences-form" method="POST">
         <label>Select your interests:</label><br>
-        <input type="checkbox" name="interests" value="technology" {% if 'technology' in session.get('interests', []) %} checked {% endif %}> Technology<br>
-        <input type="checkbox" name="interests" value="sports" {% if 'sports' in session.get('interests', []) %} checked {% endif %}> Sports<br>
-        <input type="checkbox" name="interests" value="health" {% if 'health' in session.get('interests', []) %} checked {% endif %}> Health<br>
-        <input type="checkbox" name="interests" value="business" {% if 'business' in session.get('interests', []) %} checked {% endif %}> Business<br>
-        <input type="checkbox" name="interests" value="science" {% if 'science' in session.get('interests', []) %} checked {% endif %}> Science<br>
-        <input type="checkbox" name="interests" value="politics" {% if 'politics' in session.get('interests', []) %} checked {% endif %}> Politics<br>
+        <input type="checkbox" name="interests" value="technology" {% if 'technology' in session.get('interests', []) %} checked {% endif %}> Technology ☎️<br>
+        <input type="checkbox" name="interests" value="sports" {% if 'sports' in session.get('interests', []) %} checked {% endif %}> Sports 🏊‍♂️<br>
+        <input type="checkbox" name="interests" value="health" {% if 'health' in session.get('interests', []) %} checked {% endif %}> Health ⚕️<br>
+        <input type="checkbox" name="interests" value="business" {% if 'business' in session.get('interests', []) %} checked {% endif %}> Business 💸<br>
+        <input type="checkbox" name="interests" value="science" {% if 'science' in session.get('interests', []) %} checked {% endif %}> Science 🧬<br>
+        <input type="checkbox" name="interests" value="politics" {% if 'politics' in session.get('interests', []) %} checked {% endif %}> Politics 🤝<br>
         <br>
 
-        <!-- Country Selection Dropdown -->
         <label for="country">Select your country:</label>
-        <select name="country" id="country">
-            <option value="all" {% if session.get('country') == 'all' %} selected {% endif %}>All Countries</option>
-            {% for code, country, flag in countries %}
-                <option value="{{ code }}" {% if session.get('country') == code %} selected {% endif %}>
-                    {{ flag }} {{ country }}
-                </option>
-            {% endfor %}
-        </select><br><br>
+<select name="country" id="country">
+    <option value="" disabled selected>Select a country</option>
+    {% for code, country, flag in countries %}
+        <option value="{{ code }}" {% if session.get('country') == code %} selected {% endif %}>
+            {{ flag }} {{ country }}
+        </option>
+    {% endfor %}
+</select>
+<br><br>
+
+        <!-- API Key Input -->
+        <label for="api_key">Enter your NewsAPI key:</label><br>
+<input type="text" name="api_key" id="api_key" value="{{ session.get('api_key', '') }}" placeholder="Your NewsAPI Key">
+<br><br>
+<small>
+    <a href="https://newsapi.org/register" class="tooltip">
+        <span>Get your NewsAPI key here</span>
+        <span class="tooltiptext">Getting an API key for NewsAPI is very easy and free! You just enter an email (no verification so can just put random@gmail.com), choose a password and press next, your API key will be displayed. Paste it in the field above to begin!</span>
+    </a>
+</small>
+
+        
 
         <button type="submit">Save Preferences</button>
     </form>
 
     <h2>Latest News</h2>
-    {% if news %}
+    {% if articles %}
         <ul>
-            {% for article in news %}
-                <li>
-                    <a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
-                    <p>{{ article.description }}</p>
-                    <p><em>Source: {{ article.source.name }}</em></p>
-                </li>
+            {% for article in articles %}
+                {% if article.urlToImage %}
+                    <li>
+                        <a href="{{ article.url }}" target="_blank">
+                            <img src="{{ article.urlToImage }}" alt="News Image" style="width:100px; height:auto;">
+                            {{ article.title }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ article.url }}" target="_blank">
+                            {{ article.title }}
+                        </a>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
     {% else %}
-        <p>No news available for the selected country or interests. Please check your preferences.</p>
+        <p>No news available at the moment.</p>
     {% endif %}
-
 </body>
 </html>
+
+
+
+
