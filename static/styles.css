@@ -117,7 +117,6 @@ small a:hover {
 .tooltip {
     position: relative;
     display: inline-block;
-
 }
 
 .tooltip .tooltiptext {
@@ -141,3 +140,87 @@ small a:hover {
     visibility: visible;
     opacity: 1;
 }
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Toggle button styles */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 80px; 
+    height: 80px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .dark-mode-toggle {
+    background-color: #333;
+}
+
+/* Moon icon styles */
+.moon-icon {
+    font-size: 40px; 
+    color: #000;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .moon-icon {
+    color: #fff;
+}
+
+/* Dark mode styles for form and select elements */
+body.dark-mode form,
+body.dark-mode select,
+body.dark-mode input[type="text"],
+body.dark-mode button {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+body.dark-mode select, 
+body.dark-mode input[type="text"] {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+/* Hover effect for toggle button */
+.dark-mode-toggle:hover {
+    background-color: #e0e0e0; 
+    transform: scale(1.1); 
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    background-color: #555; 
+}
+/* Dark mode styles for news articles */
+body.dark-mode li {
+    background-color: #333;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode a {
+    color: #fff;
+}
+
+body.dark-mode li:hover {
+    transform: scale(1.05);
+    background-color: #444;
+}
+
+
