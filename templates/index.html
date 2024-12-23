@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalized News Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    
-        <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
+<button id="dark-mode-toggle" class="dark-mode-toggle">
+    <i class="fas fa-moon moon-icon"></i>
+</button>
+
 
     <h1>Welcome to Your Personalized News Dashboard</h1>
-
-    <!-- User Preferences Form -->
     <form id="preferences-form" method="POST">
         <label>Select your interests:</label><br>
         <input type="checkbox" name="interests" value="technology" {% if 'technology' in session.get('interests', []) %} checked {% endif %}> Technology ☎️<br>
@@ -24,26 +26,26 @@
         <br>
 
         <label for="country">Select your country:</label>
-<select name="country" id="country">
-    <option value="" disabled selected>Select a country</option>
-    {% for code, country, flag in countries %}
-        <option value="{{ code }}" {% if session.get('country') == code %} selected {% endif %}>
-            {{ flag }} {{ country }}
-        </option>
-    {% endfor %}
-</select>
-<br><br>
+        <select name="country" id="country">
+            <option value="" disabled selected>Select a country</option>
+            {% for code, country, flag in countries %}
+                <option value="{{ code }}" {% if session.get('country') == code %} selected {% endif %}>
+                    {{ flag }} {{ country }}
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
 
-        <!-- API Key Input -->
         <label for="api_key">Enter your NewsAPI key:</label><br>
-<input type="text" name="api_key" id="api_key" value="{{ session.get('api_key', '') }}" placeholder="Your NewsAPI Key">
-<br><br>
-<small>
-    <a href="https://newsapi.org/register" class="tooltip">
-        <span>Get your NewsAPI key here</span>
-        <span class="tooltiptext">Getting an API key for NewsAPI is very easy and free! You just enter an email (no verification so can just put random@gmail.com), choose a password and press next, your API key will be displayed. Paste it in the field above to begin!</span>
-    </a>
-</small>
+        <input type="text" name="api_key" id="api_key" value="{{ session.get('api_key', '') }}" placeholder="Your NewsAPI Key">
+        <br><br>
+        <small>
+            <a href="https://newsapi.org/register" class="tooltip">
+                <span>Get your NewsAPI key here</span>
+                <span class="tooltiptext">Getting an API key for NewsAPI is very easy and free!</span>
+            </a>
+        </small>
+        <br><br>
 
         
 
@@ -73,9 +75,27 @@
     {% else %}
         <p>No news available at the moment.</p>
     {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const toggleButton = document.getElementById('dark-mode-toggle');
+    
+
+    if (localStorage.getItem('dark-mode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+    }
+
+    toggleButton.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        
+ 
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('dark-mode', 'enabled');
+        } else {
+            localStorage.setItem('dark-mode', 'disabled');
+        }
+    });
+});
+    </script>
 </body>
 </html>
-
-
-
-
