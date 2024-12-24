@@ -135,4 +135,6 @@ def index():
     return render_template('index.html', countries=countries, api_key=api_key, dark_mode=dark_mode)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5001)))
+
+
