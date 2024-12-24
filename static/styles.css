@@ -5,13 +5,13 @@
     box-sizing: border-box;
 }
 
-/* Body styling */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Merriweather', serif;
     background-color: #f4f4f4;
     color: #333;
     padding: 20px;
 }
+
 
 /* Heading styles */
 h1, h2 {
@@ -153,7 +153,6 @@ body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode a {
 
 body.dark-mode a {
     color: #bb86fc; 
-
 }
 
 /* Toggle button styles */
@@ -216,6 +215,7 @@ body.dark-mode input[type="text"] {
 body.dark-mode .dark-mode-toggle:hover {
     background-color: #555; 
 }
+
 /* Dark mode styles for news articles */
 body.dark-mode li {
     background-color: #333;
@@ -231,5 +231,3 @@ body.dark-mode li:hover {
     transform: scale(1.05);
     background-color: #444;
 }
-
-
