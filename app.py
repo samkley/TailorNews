@@ -1,7 +1,12 @@
 import requests
 from flask import Flask, render_template, request, session, redirect, url_for
 import os
+import logging
+import re
 
+# Set up logging for debugging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.secret_key = 'chickenwing2024'
@@ -46,8 +51,6 @@ COUNTRY_SOURCES = {
 
 NEWS_API_URL = 'https://newsapi.org/v2/top-headlines'
 
-import re
-
 def fetch_news(api_key, country, interests):
     url = f"{NEWS_API_URL}?apiKey={api_key}"
 
@@ -58,7 +61,7 @@ def fetch_news(api_key, country, interests):
     if interests:
         url += f"&category={','.join(interests)}"
     
-    print("Request URL:", url)  # Debugging URL
+    logger.debug("Request URL: %s", url)  # Debugging URL
 
     # Attempt to fetch top headlines
     try:
@@ -80,7 +83,7 @@ def fetch_news(api_key, country, interests):
 
         # If no articles are found, try fetching news from a specific source
         if not filtered_articles:
-            print(f"No top headlines found for {country}, attempting to fetch news from sources...")
+            logger.warning("No top headlines found for %s, attempting to fetch news from sources...", country)
             fallback_sources = COUNTRY_SOURCES.get(country, [])
             if fallback_sources:
                 valid_sources = []
@@ -91,7 +94,7 @@ def fetch_news(api_key, country, interests):
                     if source_response.status_code == 200:
                         valid_sources.append(source)
                     else:
-                        print(f"Source '{source}' is invalid for {country}")
+                        logger.error("Source '%s' is invalid for %s", source, country)
                 
                 # Try again with valid sources
                 if valid_sources:
@@ -104,7 +107,7 @@ def fetch_news(api_key, country, interests):
         
         return filtered_articles
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching news: {e}")
+        logger.error("Error fetching news: %s", e)
         return []
 
 @app.route('/', methods=['GET', 'POST'])
@@ -124,6 +127,7 @@ def index():
         session['dark_mode'] = dark_mode
         
         if not api_key:
+            logger.warning("API Key is required!")
             return render_template('index.html', error="API Key is required!", countries=countries)
 
         # Fetch news articles based on user input
@@ -135,4 +139,5 @@ def index():
     return render_template('index.html', countries=countries, api_key=api_key, dark_mode=dark_mode)
 
 if __name__ == "__main__":
+    logger.info("Starting the Flask app on Render...")
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5001)))
