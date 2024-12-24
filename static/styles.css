@@ -6,12 +6,11 @@
 }
 
 body {
-    font-family: 'Merriweather', serif;
+    font-family: 'Playfair Display', serif;
     background-color: #f4f4f4;
     color: #333;
     padding: 20px;
 }
-
 
 /* Heading styles */
 h1, h2 {
