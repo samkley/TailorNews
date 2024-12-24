@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personalized News Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/x-icon">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Personalized News Dashboard</title>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/x-icon">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    </head>
+    
 <body>
 <button id="dark-mode-toggle" class="dark-mode-toggle">
     <i class="fas fa-moon moon-icon"></i>
 </button>
-
 
     <h1>Welcome to Your Personalized News Dashboard</h1>
     <form id="preferences-form" method="POST">
@@ -47,34 +48,31 @@
         </small>
         <br><br>
 
-        
-
         <button type="submit">Save Preferences</button>
     </form>
 
+    <!-- Show Latest News only if a country is selected -->
+    {% if session.get('country') %}
     <h2>Latest News</h2>
     {% if articles %}
         <ul>
             {% for article in articles %}
-                {% if article.urlToImage %}
-                    <li>
-                        <a href="{{ article.url }}" target="_blank">
+                <li>
+                    <a href="{{ article.url }}" target="_blank">
+                        {% if article.urlToImage %}
                             <img src="{{ article.urlToImage }}" alt="News Image" style="width:100px; height:auto;">
-                            {{ article.title }}
-                        </a>
-                    </li>
-                {% else %}
-                    <li>
-                        <a href="{{ article.url }}" target="_blank">
-                            {{ article.title }}
-                        </a>
-                    </li>
-                {% endif %}
+                        {% endif %}
+                        {{ article.title }}
+                    </a>
+                </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>No news available at the moment.</p>
     {% endif %}
+{% else %}
+    <p>Please select a country to view news.</p>
+{% endif %}
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -99,3 +97,5 @@
     </script>
 </body>
 </html>
+
+
