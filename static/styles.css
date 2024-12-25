@@ -6,17 +6,19 @@
 }
 
 body {
-    font-family: 'Playfair Display', serif;
-    background-color: #f4f4f4;
+    font-family: 'Roboto', sans-serif; /* Modern and clean font */
+    background-color: #f5f5f5; /* Light background for a cleaner look */
     color: #333;
     padding: 20px;
+    line-height: 1.6;
 }
 
 /* Heading styles */
 h1, h2 {
-    color: #444;
+    color: #333;
     text-align: center;
     margin-bottom: 20px;
+    font-weight: 700;
 }
 
 /* News article list styling */
@@ -26,20 +28,23 @@ ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 20px;
 }
 
 li {
     background-color: #fff;
     margin: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    padding: 10px;
-    transition: transform 0.3s ease;
+    border-radius: 12px; /* Slightly larger border-radius for a smoother look */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 li:hover {
     transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    background-color: #f1f1f1; /* Change background color on hover */
 }
 
 a {
@@ -64,55 +69,62 @@ li img {
 /* Form styles */
 form {
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin: 20px 0;
-    max-width: 500px;
+    max-width: 550px;
     margin-left: auto;
     margin-right: auto;
 }
 
 label {
     display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #444;
 }
 
 input[type="text"], select {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
+    padding: 12px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
 }
 
 input[type="checkbox"] {
-    margin-right: 5px;
+    margin-right: 8px;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #007bff;
+    padding: 12px 24px;
+    background-color: #6200ea;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #3700b3;
+    transform: translateY(-2px);
 }
 
 small a {
-    color: #007bff;
+    color: #6200ea;
+    font-size: 14px;
 }
 
 small a:hover {
     text-decoration: underline;
 }
 
-/* Tooltip styling */
+/* Tooltip styles */
 .tooltip {
     position: relative;
     display: inline-block;
@@ -121,16 +133,16 @@ small a:hover {
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 250px;
-    background-color: black;
+    background-color: #333;
     color: #fff;
     text-align: center;
     border-radius: 5px;
-    padding: 5px;
+    padding: 8px;
     position: absolute;
     z-index: 1;
-    bottom: 125%; /* Position above the text */
+    bottom: 125%;
     left: 50%;
-    margin-left: -125px; /* Offset to center the tooltip */
+    margin-left: -125px;
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -143,7 +155,7 @@ small a:hover {
 /* Dark mode styles */
 body.dark-mode {
     background-color: #121212;
-    color: #e0e0e0;  
+    color: #e0e0e0;
 }
 
 body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode a {
@@ -151,40 +163,49 @@ body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode a {
 }
 
 body.dark-mode a {
-    color: #bb86fc; 
+    color: #bb86fc;
 }
 
-/* Toggle button styles */
+/* Modern Toggle button styles */
 .dark-mode-toggle {
     position: fixed;
     bottom: 20px;
-    left: 20px;
-    width: 80px; 
-    height: 80px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background-color: #f1f1f1;
+    background-color: #6200ea;
     border: none;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    outline: none;
 }
 
 body.dark-mode .dark-mode-toggle {
-    background-color: #333;
+    background-color: #bb86fc;
 }
 
 /* Moon icon styles */
 .moon-icon {
-    font-size: 40px; 
-    color: #000;
-    transition: color 0.3s ease;
+    font-size: 28px;
+    color: #fff;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 body.dark-mode .moon-icon {
-    color: #fff;
+    color: #121212;
+    transform: rotate(180deg);
+}
+
+/* Hover effect for toggle button */
+.dark-mode-toggle:hover {
+    background-color: #3700b3;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
 }
 
 /* Dark mode styles for form and select elements */
@@ -197,22 +218,17 @@ body.dark-mode button {
     border: 1px solid #555;
 }
 
-body.dark-mode select, 
+body.dark-mode select,
 body.dark-mode input[type="text"] {
     background-color: #333;
     color: #fff;
     border: 1px solid #555;
 }
 
-/* Hover effect for toggle button */
-.dark-mode-toggle:hover {
-    background-color: #e0e0e0; 
-    transform: scale(1.1); 
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-body.dark-mode .dark-mode-toggle:hover {
-    background-color: #555; 
+/* Updated label styles for better visibility in dark mode */
+body.dark-mode label {
+    color: #e0e0e0; /* Bright and easily readable text */
+    font-weight: 700; 
 }
 
 /* Dark mode styles for news articles */
@@ -230,3 +246,57 @@ body.dark-mode li:hover {
     transform: scale(1.05);
     background-color: #444;
 }
+
+/* Updated button styles for Save Preferences in dark mode */
+body.dark-mode button {
+    background-color: #bb86fc; /* Same color as the moon button */
+    color: #121212;
+}
+
+body.dark-mode button:hover {
+    background-color: #8c52ff; /* Slightly darker shade for hover effect */
+}
+
+/* Updated link styles for NewsAPI key in dark mode */
+body.dark-mode small a {
+    color: #bb86fc; /* Match the dark mode button color */
+}
+
+body.dark-mode small a:hover {
+    color: #8c52ff; /* Hover effect matching button hover */
+}
+
+/* News container styling */
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.news-tile {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    overflow: hidden;
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Added transition for background-color */
+}
+
+.news-tile:hover {
+    transform: scale(1.05);
+    background-color: #f1f1f1; /* Change background color on hover */
+}
+
+.news-tile img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid #ddd; 
+}
+
+.news-content {
+    padding: 10px;
+}
+
