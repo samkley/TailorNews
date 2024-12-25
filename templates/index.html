@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Personalized News Dashboard</title>
-        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
         <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/x-icon">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -55,18 +55,21 @@
     {% if session.get('country') %}
     <h2>Latest News</h2>
     {% if articles %}
-        <ul>
+        <div class="news-container">
             {% for article in articles %}
-                <li>
+                <div class="news-tile">
                     <a href="{{ article.url }}" target="_blank">
                         {% if article.urlToImage %}
-                            <img src="{{ article.urlToImage }}" alt="News Image" style="width:100px; height:auto;">
+                            <img src="{{ article.urlToImage }}" alt="News Image">
                         {% endif %}
-                        {{ article.title }}
+                        <div class="news-content">
+                            <h3>{{ article.title }}</h3>
+                            <p>{{ article.description }}</p>
+                        </div>
                     </a>
-                </li>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
         <p>No news available at the moment.</p>
     {% endif %}
@@ -77,7 +80,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
     const toggleButton = document.getElementById('dark-mode-toggle');
-    
 
     if (localStorage.getItem('dark-mode') === 'enabled') {
         document.body.classList.add('dark-mode');
@@ -85,8 +87,7 @@
 
     toggleButton.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
-        
- 
+
         if (document.body.classList.contains('dark-mode')) {
             localStorage.setItem('dark-mode', 'enabled');
         } else {
@@ -97,5 +98,4 @@
     </script>
 </body>
 </html>
-
 
